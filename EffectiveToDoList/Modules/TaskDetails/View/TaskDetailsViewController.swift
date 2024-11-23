@@ -107,6 +107,7 @@ extension TaskDetailsViewController: TaskDetailsViewProtocol {
         dateLabel.text = task.formattedDate
         descriptionTextView.textColor = AppColors.pureWhite
         descriptionTextView.text = task.description
+        descriptionTextView.becomeFirstResponder()
     }
 }
 
