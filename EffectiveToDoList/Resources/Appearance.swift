@@ -16,6 +16,8 @@ struct AppFonts {
     static let regular11 = UIFont.systemFont(ofSize: 11, weight: .regular)
     static let button = UIFont.systemFont(ofSize: 16, weight: .medium)
     static let caption = UIFont.systemFont(ofSize: 12, weight: .regular)
+    static let title = UIFont.systemFont(ofSize: 34, weight: .bold)
+    static let description = UIFont.systemFont(ofSize: 16, weight: .regular)
 }
 
 struct AppIcons {

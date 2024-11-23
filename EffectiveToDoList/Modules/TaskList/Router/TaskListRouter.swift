@@ -5,11 +5,14 @@ class TaskListRouter: TaskListRouterProtocol {
     // MARK: - Properties
     weak var view: UIViewController?
     
+    // MARK: - TaskListRouterProtocol
     func navigateToTaskDetails(with task: Task) {
-        // configure + navController push
+        let taskDetailsVC = TaskDetailsConfigurator.configure(with: task)
+        view?.navigationController?.pushViewController(taskDetailsVC, animated: true)
     }
     
     func navigateToAddTask() {
-        // configure + navController push
+        let taskDetailsVC = TaskDetailsConfigurator.configure()
+        view?.navigationController?.pushViewController(taskDetailsVC, animated: true)
     }
 }

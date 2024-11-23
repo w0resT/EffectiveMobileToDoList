@@ -33,7 +33,7 @@ protocol TaskListPresenterProtocol: AnyObject {
     func didTapShare(task: TaskViewModel)
     func didTapDelete(task: TaskViewModel)
     func didTapCompleted(task: TaskViewModel)
-    func updateSearchResults(for text: String)
+    func didUpdateSearchResults(for text: String)
 }
 
 // MARK: - Router Protocol

@@ -90,7 +90,6 @@ extension TaskListViewController: TaskListViewProtocol {
         self.countLabel.text = "\(tasks.count) задач"
         
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-//        tableView.reloadData()
     }
     
 }
@@ -154,7 +153,7 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
 extension TaskListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        presenter?.updateSearchResults(for: searchText)
+        presenter?.didUpdateSearchResults(for: searchText)
     }
 }
 
@@ -169,8 +168,10 @@ private extension TaskListViewController {
     func setupSelfView() {
         self.title = "Задачи"
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.tintColor = AppColors.yellow
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.backButtonTitle = "Назад"
     }
     
     func setupTableView() {

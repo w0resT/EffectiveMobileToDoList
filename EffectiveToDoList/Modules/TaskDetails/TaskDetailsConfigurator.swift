@@ -1,8 +1,21 @@
-//
-//  TaskDetailsConfigurator.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 23.11.2024.
-//
+import UIKit
 
-import Foundation
+final class TaskDetailsConfigurator {
+    static func configure(with task: Task? = nil) -> UIViewController {
+        let view = TaskDetailsViewController()
+        let interactor = TaskDetailsInteractor()
+        let presenter = TaskDetailsPresenter()
+        let router = TaskDetailsRouter()
+        
+        view.presenter = presenter
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
+        interactor.presenter = presenter
+        router.view = view
+        
+        presenter.task = task
+        
+        return view
+    }
+}

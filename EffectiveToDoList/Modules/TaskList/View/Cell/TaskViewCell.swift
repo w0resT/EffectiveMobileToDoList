@@ -24,6 +24,7 @@ class TaskViewCell: UITableViewCell {
         let label = UILabel()
         label.font = AppFonts.button
         label.textColor = AppColors.pureWhite
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

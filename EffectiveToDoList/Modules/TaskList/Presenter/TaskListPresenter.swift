@@ -10,6 +10,7 @@ class TaskListPresenter: TaskListPresenterProtocol {
     private var tasks: [TaskViewModel] = []
     private var filteredTasks: [TaskViewModel] = []
     
+    // MARK: - TaskListPresenterProtocol
     func viewDidLoad() {
         interactor?.fetchTasks()
     }
@@ -44,8 +45,7 @@ class TaskListPresenter: TaskListPresenterProtocol {
         }
     }
     
-    func updateSearchResults(for text: String) {
-        // TODO: не обновлять, если filteredTasks == oldfilteredTasks
+    func didUpdateSearchResults(for text: String) {
         filteredTasks = text.isEmpty ? tasks : tasks.filter { $0.title.lowercased().contains(text.lowercased()) }
         view?.showTasks(filteredTasks)
     }

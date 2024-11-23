@@ -1,8 +1,8 @@
-//
-//  TaskDetailsRouter.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 23.11.2024.
-//
+import UIKit
 
-import Foundation
+class TaskDetailsRouter: TaskDetailsRouterProtocol {
+    
+    // MARK: - Properties
+    weak var view: UIViewController?
+    
+}

@@ -1,8 +1,9 @@
-//
-//  TaskDetailsInteractor.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 23.11.2024.
-//
-
 import Foundation
+
+class TaskDetailsInteractor: TaskDetailsInteractorProtocol {
+    
+    // MARK: - Public Propeties
+    weak var presenter: TaskDetailsInteractorOutputProtocol?
+    
+    
+}
