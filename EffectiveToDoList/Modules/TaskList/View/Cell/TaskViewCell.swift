@@ -1,23 +1,111 @@
-//
-//  TaskViewCell.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 22.11.2024.
-//
-
 import UIKit
 
 class TaskViewCell: UITableViewCell {
+    // MARK: - UI Elements
+    private lazy var iconImageView: UIImageView = {
+        let icon = UIImageView()
+        icon.contentMode = .scaleAspectFit
+        icon.image = AppIcons.unselected
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        return icon
+    }()
+    
+    private lazy var vStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 6
+        stack.distribution = .equalSpacing
+        stack.alignment = .leading
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.button
+        label.textColor = AppColors.pureWhite
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.caption
+        label.textColor = AppColors.pureWhite
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.caption
+        label.textColor = AppColors.whiteOpacity
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    // MARK: - Initializers
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Public Methods
+    func configure(with task: TaskViewModel) {
+        let isCompleted = task.isCompleted
+        let iconImage = isCompleted ? AppIcons.selected : AppIcons.unselected
+        let textColor = isCompleted ? AppColors.whiteOpacity : AppColors.pureWhite
+        
+        iconImageView.image = iconImage
+        titleLabel.attributedText = task.title.strikeThrough(isCompleted)
+        titleLabel.textColor = textColor
+        descriptionLabel.text = task.description
+        descriptionLabel.textColor = textColor
+        dateLabel.text = task.formattedDate
+    }
+}
 
+// MARK: - Setup UI
+private extension TaskViewCell {
+    func setupUI() {
+        self.backgroundColor = .clear
+        
+        setupIconImageView()
+        setupVStackView()
+    }
+    
+    func setupIconImageView() {
+        if iconImageView.superview == nil {
+            contentView.addSubview(iconImageView)
+        }
+        
+        NSLayoutConstraint.activate([
+            iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24),
+            iconImageView.widthAnchor.constraint(equalToConstant: 24)
+        ])
+    }
+    
+    func setupVStackView() {
+        if vStackView.superview == nil {
+            contentView.addSubview(vStackView)
+            
+            vStackView.addArrangedSubview(titleLabel)
+            vStackView.addArrangedSubview(descriptionLabel)
+            vStackView.addArrangedSubview(dateLabel)
+        }
+        
+        NSLayoutConstraint.activate([
+            vStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            vStackView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+            vStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            vStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+        ])
+    }
 }

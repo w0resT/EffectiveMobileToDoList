@@ -1,8 +1,9 @@
-//
-//  TaskListEntity.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 22.11.2024.
-//
-
 import Foundation
+
+struct Task {
+    var id: Int
+    var title: String
+    var description: String?
+    var dateCreated: Date
+    var isCompleted: Bool
+}

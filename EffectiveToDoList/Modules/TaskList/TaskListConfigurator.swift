@@ -1,8 +1,19 @@
-//
-//  TaskListConfigurator.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 22.11.2024.
-//
+import UIKit
 
-import Foundation
+final class TaskListConfigurator {
+    static func configure() -> UIViewController {
+        let view = TaskListViewController()
+        let interactor = TaskListInteractor()
+        let presenter = TaskListPresenter()
+        let router = TaskListRouter()
+        
+        view.presenter = presenter
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
+        interactor.presenter = presenter
+        router.view = view
+        
+        return view
+    }
+}

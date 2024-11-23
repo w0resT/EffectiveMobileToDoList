@@ -1,8 +1,15 @@
-//
-//  TaskListRouter.swift
-//  EffectiveToDoList
-//
-//  Created by Mikhail on 22.11.2024.
-//
+import UIKit
 
-import Foundation
+class TaskListRouter: TaskListRouterProtocol {
+    
+    // MARK: - Properties
+    weak var view: UIViewController?
+    
+    func navigateToTaskDetails(with task: Task) {
+        // configure + navController push
+    }
+    
+    func navigateToAddTask() {
+        // configure + navController push
+    }
+}
