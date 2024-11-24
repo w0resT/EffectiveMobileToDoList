@@ -2,6 +2,9 @@ import UIKit
 
 final class TaskListConfigurator {
     static func configure() -> UIViewController {
+        let networkService = NetworkService()
+        let networkManager = NetworkManager(networkService: networkService)
+        
         let view = TaskListViewController()
         let interactor = TaskListInteractor()
         let presenter = TaskListPresenter()
@@ -13,6 +16,8 @@ final class TaskListConfigurator {
         presenter.router = router
         interactor.presenter = presenter
         router.view = view
+        
+        interactor.networkManager = networkManager
         
         return view
     }

@@ -10,6 +10,13 @@ class TaskListViewController: UIViewController {
     private var tasks: [TaskViewModel] = []
     
     // MARK: - UI Elements
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     private lazy var searchController: UISearchController = {
         let controller = UISearchController()
         controller.searchResultsUpdater = self
@@ -92,6 +99,13 @@ extension TaskListViewController: TaskListViewProtocol {
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
+    func showActivityIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
 }
 
 // MARK: - UITableViewDelegate & UITableViewDataSource
@@ -103,7 +117,6 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", 
                                                        for: indexPath) as? TaskViewCell else {
-            print("dequeueReusableCell failed: \(indexPath)")
             return UITableViewCell()
         }
         
@@ -163,6 +176,7 @@ private extension TaskListViewController {
         setupSelfView()
         setupTableView()
         setupFooterView()
+        setupActivityIndicator()
     }
     
     func setupSelfView() {
@@ -213,6 +227,17 @@ private extension TaskListViewController {
             spacerView.widthAnchor.constraint(equalToConstant: 30),
             addButton.heightAnchor.constraint(equalToConstant: 30),
             addButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    func setupActivityIndicator() {
+        if activityIndicator.superview == nil {
+            view.addSubview(activityIndicator)
+        }
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }

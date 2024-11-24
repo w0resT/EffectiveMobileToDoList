@@ -21,6 +21,12 @@
 		148FB5D62CF12A2C0017D420 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FB5D52CF12A2C0017D420 /* Appearance.swift */; };
 		148FB5D92CF12B000017D420 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FB5D82CF12B000017D420 /* UIColor+Hex.swift */; };
 		148FB5DD2CF1698E0017D420 /* String+Strikethrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FB5DC2CF1698E0017D420 /* String+Strikethrough.swift */; };
+		1495895C2CF36606009B34D3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1495895B2CF36606009B34D3 /* NetworkManager.swift */; };
+		1495895F2CF368C1009B34D3 /* TaskDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1495895E2CF368C1009B34D3 /* TaskDTO.swift */; };
+		149589612CF36925009B34D3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149589602CF36925009B34D3 /* NetworkService.swift */; };
+		149589632CF36C38009B34D3 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149589622CF36C38009B34D3 /* APIConstants.swift */; };
+		149589652CF375D4009B34D3 /* Task+TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149589642CF375D4009B34D3 /* Task+TaskViewModel.swift */; };
+		149589672CF375F9009B34D3 /* Task+TaskDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149589662CF375F9009B34D3 /* Task+TaskDTO.swift */; };
 		14B8C1172CF0DD3300F8228B /* TaskListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B8C1162CF0DD3300F8228B /* TaskListProtocols.swift */; };
 		14B8C1192CF0F6C300F8228B /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B8C1182CF0F6C300F8228B /* TaskListViewController.swift */; };
 		14B8C1202CF0F72D00F8228B /* TaskListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B8C11F2CF0F72D00F8228B /* TaskListEntity.swift */; };
@@ -49,6 +55,12 @@
 		148FB5D52CF12A2C0017D420 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		148FB5D82CF12B000017D420 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		148FB5DC2CF1698E0017D420 /* String+Strikethrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Strikethrough.swift"; sourceTree = "<group>"; };
+		1495895B2CF36606009B34D3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		1495895E2CF368C1009B34D3 /* TaskDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDTO.swift; sourceTree = "<group>"; };
+		149589602CF36925009B34D3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		149589622CF36C38009B34D3 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		149589642CF375D4009B34D3 /* Task+TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+TaskViewModel.swift"; sourceTree = "<group>"; };
+		149589662CF375F9009B34D3 /* Task+TaskDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+TaskDTO.swift"; sourceTree = "<group>"; };
 		14B8C1162CF0DD3300F8228B /* TaskListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListProtocols.swift; sourceTree = "<group>"; };
 		14B8C1182CF0F6C300F8228B /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		14B8C11F2CF0F72D00F8228B /* TaskListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListEntity.swift; sourceTree = "<group>"; };
@@ -123,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				148C42A02CF23C9D0064B6BA /* Helpers */,
-				148FB5D72CF12AE70017D420 /* Extension */,
+				148FB5D72CF12AE70017D420 /* Extensions */,
 				1485551A2CF0DA1F00D983F7 /* Modules */,
 				148555192CF0DA1B00D983F7 /* Storage */,
 				148555182CF0DA1500D983F7 /* Network */,
@@ -156,6 +168,10 @@
 		148555182CF0DA1500D983F7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				1495895D2CF368A9009B34D3 /* Model */,
+				1495895B2CF36606009B34D3 /* NetworkManager.swift */,
+				149589602CF36925009B34D3 /* NetworkService.swift */,
+				149589622CF36C38009B34D3 /* APIConstants.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -211,13 +227,23 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		148FB5D72CF12AE70017D420 /* Extension */ = {
+		148FB5D72CF12AE70017D420 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				148FB5D82CF12B000017D420 /* UIColor+Hex.swift */,
 				148FB5DC2CF1698E0017D420 /* String+Strikethrough.swift */,
+				149589642CF375D4009B34D3 /* Task+TaskViewModel.swift */,
+				149589662CF375F9009B34D3 /* Task+TaskDTO.swift */,
 			);
-			path = Extension;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1495895D2CF368A9009B34D3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1495895E2CF368C1009B34D3 /* TaskDTO.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		14B8C11A2CF0F6C900F8228B /* View */ = {
@@ -344,13 +370,19 @@
 				14B8C1282CF0F77C00F8228B /* TaskListConfigurator.swift in Sources */,
 				14B8C12D2CF1124100F8228B /* TaskListViewModel.swift in Sources */,
 				147AD56D2CF2671700127D24 /* TaskDetailsProtocols.swift in Sources */,
+				149589652CF375D4009B34D3 /* Task+TaskViewModel.swift in Sources */,
+				1495895C2CF36606009B34D3 /* NetworkManager.swift in Sources */,
 				147AD5712CF2684200127D24 /* TaskDetailsRouter.swift in Sources */,
 				148555032CF0D92600D983F7 /* AppDelegate.swift in Sources */,
 				14B8C1262CF0F75D00F8228B /* TaskListPresenter.swift in Sources */,
 				147AD5772CF2699E00127D24 /* TaskDetailsViewController.swift in Sources */,
 				14B8C1172CF0DD3300F8228B /* TaskListProtocols.swift in Sources */,
+				149589612CF36925009B34D3 /* NetworkService.swift in Sources */,
+				149589632CF36C38009B34D3 /* APIConstants.swift in Sources */,
 				148C42A22CF23CBA0064B6BA /* DateFormatterHelper.swift in Sources */,
 				148555052CF0D92600D983F7 /* SceneDelegate.swift in Sources */,
+				149589672CF375F9009B34D3 /* Task+TaskDTO.swift in Sources */,
+				1495895F2CF368C1009B34D3 /* TaskDTO.swift in Sources */,
 				147AD5752CF2690700127D24 /* TaskDetailsPresenter.swift in Sources */,
 				147AD56F2CF2672D00127D24 /* TaskDetailsConfigurator.swift in Sources */,
 				14B8C1192CF0F6C300F8228B /* TaskListViewController.swift in Sources */,

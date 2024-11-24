@@ -12,6 +12,7 @@ class TaskListPresenter: TaskListPresenterProtocol {
     
     // MARK: - TaskListPresenterProtocol
     func viewDidLoad() {
+        view?.showActivityIndicator()
         interactor?.fetchTasks()
     }
     
@@ -55,11 +56,13 @@ class TaskListPresenter: TaskListPresenterProtocol {
 extension TaskListPresenter: TaskListInteractorOutputProtocol {
     func didFetchTasks(_ tasks: [Task]) {
         self.tasks = tasks.map{ TaskViewModel(task: $0)}
+        view?.hideActivityIndicator()
         view?.showTasks(self.tasks)
     }
     
     func didFailToFetchTasks(_ error: String) {
-        // show alert
+        print("didFailToFetchTasks: \(error)")
+        view?.hideActivityIndicator()
     }
     
     func didAddTask(_ task: Task) {

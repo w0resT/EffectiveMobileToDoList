@@ -101,13 +101,7 @@ private extension TaskDetailsViewController {
 // MARK: - TaskDetailsViewProtocol
 extension TaskDetailsViewController: TaskDetailsViewProtocol {
     func showTaskDetails(_ task: TaskViewModel) {
-        // TODO: move to private func
-        titleTextView.textColor = AppColors.pureWhite
-        titleTextView.text = task.title
-        dateLabel.text = task.formattedDate
-        descriptionTextView.textColor = AppColors.pureWhite
-        descriptionTextView.text = task.description
-        descriptionTextView.becomeFirstResponder()
+        setTaskDetails(task: task)
     }
 }
 
@@ -140,5 +134,17 @@ extension TaskDetailsViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         // Save char by char?
+    }
+}
+
+// MARK: - Helpers
+private extension TaskDetailsViewController {
+    func setTaskDetails(task: TaskViewModel) {
+        titleTextView.textColor = AppColors.pureWhite
+        titleTextView.text = task.title
+        dateLabel.text = task.formattedDate
+        descriptionTextView.textColor = AppColors.pureWhite
+        descriptionTextView.text = task.description
+        descriptionTextView.becomeFirstResponder()
     }
 }

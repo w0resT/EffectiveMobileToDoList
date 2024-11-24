@@ -3,7 +3,8 @@ import Foundation
 // MARK: - View Protocol
 protocol TaskListViewProtocol: AnyObject {
     func showTasks(_ tasks: [TaskViewModel])
-    
+    func showActivityIndicator()
+    func hideActivityIndicator()
 }
 
 // MARK: - Interactor Protocols
