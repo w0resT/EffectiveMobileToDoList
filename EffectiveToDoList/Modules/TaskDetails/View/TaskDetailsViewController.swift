@@ -6,7 +6,7 @@ class TaskDetailsViewController: UIViewController {
     var presenter: TaskDetailsPresenterProtocol?
     
     // MARK: - Private Properties
-    private var task: TaskViewModel?
+    private var task: TaskViewModel!
     
     // MARK: - UI Elements
     private lazy var headerStackView: UIStackView = {
@@ -55,7 +55,6 @@ class TaskDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        presenter?.viewDidLoad()
     }
 }
 
@@ -64,6 +63,9 @@ private extension TaskDetailsViewController {
     func setupUI() {
         self.navigationItem.largeTitleDisplayMode = .never
         self.view.backgroundColor = AppColors.black
+        self.navigationItem.backAction = UIAction {_ in
+            self.presenter?.didTapBackButton(task: self.task)
+        }
         
         setupHeaderStackView()
         setupDescriptionTextView()
@@ -101,21 +103,39 @@ private extension TaskDetailsViewController {
 // MARK: - TaskDetailsViewProtocol
 extension TaskDetailsViewController: TaskDetailsViewProtocol {
     func showTaskDetails(_ task: TaskViewModel) {
+        self.task = task
         setTaskDetails(task: task)
+    }
+    
+    func updateTitle(with text: String) {
+        task.title = text
+    }
+    
+    func updateDescription(with text: String) {
+        task.description = text
     }
 }
 
 // MARK: - UITextViewDelegate
 extension TaskDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        // Если установлен цвет "AppColors.whiteOpacity", то текущий текст это плейсхолдер
+        // Если установлен цвет "AppColors.whiteOpacity", то текущий текст это Placeholder
         if textView.textColor == AppColors.whiteOpacity {
             textView.text = ""
             textView.textColor = AppColors.pureWhite
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {  
+        // Placeholder
+        if textView.text.isEmpty {
+            textView.text = textView.accessibilityIdentifier == "taskDetailsTitleTextView" ? "Title" : "Description"
+            textView.textColor = AppColors.whiteOpacity
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        // Save char by char
         switch textView.accessibilityIdentifier {
         case "taskDetailsTitleTextView":
             presenter?.didChangeTitle(with: textView.text)
@@ -124,24 +144,17 @@ extension TaskDetailsViewController: UITextViewDelegate {
         default:
             break
         }
-        
-        // Placeholder
-        if textView.text.isEmpty || textView.text == "" {
-            textView.text = textView.accessibilityIdentifier == "taskDetailsTitleTextView" ? "Title" : "Description"
-            textView.textColor = AppColors.whiteOpacity
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        // Save char by char?
     }
 }
 
 // MARK: - Helpers
 private extension TaskDetailsViewController {
     func setTaskDetails(task: TaskViewModel) {
-        titleTextView.textColor = AppColors.pureWhite
-        titleTextView.text = task.title
+        // Не меняем текст и цвет заголовка тем самым оставляя Placeholder 
+        if !task.title.isEmpty {
+            titleTextView.textColor = AppColors.pureWhite
+            titleTextView.text = task.title
+        }
         dateLabel.text = task.formattedDate
         descriptionTextView.textColor = AppColors.pureWhite
         descriptionTextView.text = task.description

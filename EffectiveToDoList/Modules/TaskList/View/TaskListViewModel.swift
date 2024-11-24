@@ -6,7 +6,9 @@ struct TaskViewModel  {
     var description: String?
     var formattedDate: String
     var isCompleted: Bool
-    
+}
+
+extension TaskViewModel {
     init(task: Task) {
         id = task.id
         title = task.title

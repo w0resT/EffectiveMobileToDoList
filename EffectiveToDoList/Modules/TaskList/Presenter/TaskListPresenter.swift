@@ -7,12 +7,16 @@ class TaskListPresenter: TaskListPresenterProtocol {
     var router: TaskListRouterProtocol?
     weak var view: TaskListViewProtocol?
     
-    private var tasks: [TaskViewModel] = []
-    private var filteredTasks: [TaskViewModel] = []
+    // MARK: - TaskDetailsDelegate
+    func didUpdateTask(_ task: Task) {
+        interactor?.createOrUpdateTask(task)
+    }
     
     // MARK: - TaskListPresenterProtocol
     func viewDidLoad() {
+        // TODO: Update tasks in storage after fetching
         view?.showActivityIndicator()
+//        interactor?.fetchTasksNetwork()
         interactor?.fetchTasks()
     }
     
@@ -25,67 +29,76 @@ class TaskListPresenter: TaskListPresenterProtocol {
         router?.navigateToAddTask()
     }
     
-    func didTapShare(task: TaskViewModel) {
-        // share
-    }
+    func didTapShare(task: TaskViewModel) {}
     
     func didTapDelete(task: TaskViewModel) {
         let taskEntity = Task(taskViewModel: task)
-        interactor?.removeTask(taskEntity)
+        interactor?.deleteTask(taskEntity)
     }
     
     func didTapCompleted(task: TaskViewModel) {
         let taskEntity = Task(taskViewModel: task)
-        interactor?.updateTaskStatus(taskEntity)
-        
-        // TODO: interactor -> storage upd -> presenter -> ...
-        if let taskIndex = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[taskIndex].isCompleted.toggle()
-            // TODO: update row
-            view?.showTasks(tasks)
-        }
+        interactor?.updateTask(taskEntity)
     }
     
     func didUpdateSearchResults(for text: String) {
-        filteredTasks = text.isEmpty ? tasks : tasks.filter { $0.title.lowercased().contains(text.lowercased()) }
-        view?.showTasks(filteredTasks)
+        // TODO: interactor -> storage upd -> presenter -> ...
+//        filteredTasks = text.isEmpty ? tasks : tasks.filter { $0.title.lowercased().contains(text.lowercased()) }
+//        view?.showTasks(filteredTasks)
     }
 }
 
 // MARK: - TaskListInteractorOutputProtocol
 extension TaskListPresenter: TaskListInteractorOutputProtocol {
     func didFetchTasks(_ tasks: [Task]) {
-        self.tasks = tasks.map{ TaskViewModel(task: $0)}
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
         view?.hideActivityIndicator()
-        view?.showTasks(self.tasks)
+        view?.showTasks(tasksViewModel)
+    }
+    
+    func didCreateTask(_ tasks: [Task]) {
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        view?.showTasks(tasksViewModel)
+    }
+    
+    func didDeleteTask(_ tasks: [Task]) {
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        view?.showTasks(tasksViewModel)
+    }
+    
+    func didUpdateTask(_ tasks: [Task]) {
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        view?.showTasks(tasksViewModel)
+    }
+    
+    func didCreateOrUpdateTask(_ tasks: [Task]) {
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        view?.showTasks(tasksViewModel)
     }
     
     func didFailToFetchTasks(_ error: String) {
         print("didFailToFetchTasks: \(error)")
+        // view show alert with msg = error
         view?.hideActivityIndicator()
     }
     
-    func didAddTask(_ task: Task) {
-        // update row/table
+    func didFailToCreateTask(_ error: String) {
+        print("didFailToCreateTask: \(error)")
+        // view show alert with msg = error
     }
     
-    func didFailToAddTask(_ error: String) {
-        // show alert
+    func didFailToDeleteTask(_ error: String) {
+        print("didFailToDeleteTask: \(error)")
+        // view show alert with msg = error
     }
     
-    func didRemoveTask(_ task: Task) {
-        // update row/table
+    func didFailToUpdateTask(_ error: String) {
+        print("didFailToUpdateTask: \(error)")
+        // view show alert with msg = error
     }
     
-    func didFailToRemoveTask(_ error: String) {
-        // show alert
-    }
-    
-    func didUpdateTaskStatus( _task: Task) {
-        // update row/table
-    }
-    
-    func didFailToUpdateTaskStatus(_ error: String) {
-        // show alert
+    func didFailToCreateOrUpdateTask(_ error: String) {
+        print("didFailToCreateOrUpdateTask: \(error)")
+        // view show alert with msg = error
     }
 }

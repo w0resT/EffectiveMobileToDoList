@@ -2,6 +2,8 @@ import Foundation
 
 // MARK: - View Protocol
 protocol TaskListViewProtocol: AnyObject {
+    var presenter: TaskListPresenterProtocol? { get }
+    
     func showTasks(_ tasks: [TaskViewModel])
     func showActivityIndicator()
     func hideActivityIndicator()
@@ -9,25 +11,29 @@ protocol TaskListViewProtocol: AnyObject {
 
 // MARK: - Interactor Protocols
 protocol TaskListInteractorProtocol: AnyObject {
+    func fetchTasksNetwork()
     func fetchTasks()
-    func addTask(_ task: Task)
-    func removeTask(_ task: Task)
-    func updateTaskStatus(_ task: Task)
+    func createTask(_ task: Task)
+    func deleteTask(_ task: Task)
+    func updateTask(_ task: Task)
+    func createOrUpdateTask(_ task: Task)
 }
 
 protocol TaskListInteractorOutputProtocol: AnyObject {
     func didFetchTasks(_ tasks: [Task])
+    func didCreateTask(_ tasks: [Task])
+    func didDeleteTask(_ tasks: [Task])
+    func didUpdateTask(_ tasks: [Task])
+    func didCreateOrUpdateTask(_ tasks: [Task])
     func didFailToFetchTasks(_ error: String)
-    func didAddTask(_ task: Task)
-    func didFailToAddTask(_ error: String)
-    func didRemoveTask(_ task: Task)
-    func didFailToRemoveTask(_ error: String)
-    func didUpdateTaskStatus( _task: Task)
-    func didFailToUpdateTaskStatus(_ error: String)
+    func didFailToCreateTask(_ error: String)
+    func didFailToDeleteTask(_ error: String)
+    func didFailToUpdateTask(_ error: String)
+    func didFailToCreateOrUpdateTask(_ error: String)
 }
 
 // MARK: - Presenter Protocol
-protocol TaskListPresenterProtocol: AnyObject {
+protocol TaskListPresenterProtocol: TaskDetailsDelegate, AnyObject {
     func viewDidLoad()
     func didSelectTask(task: TaskViewModel)
     func didTapAddTask()

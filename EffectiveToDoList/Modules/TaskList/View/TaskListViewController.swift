@@ -74,6 +74,11 @@ class TaskListViewController: UIViewController {
         return spacer
     }()
     
+    private lazy var alertController: UIAlertController = {
+        let alertController = UIAlertController(title: "Warning", message: nil, preferredStyle: .alert)
+        return alertController
+    }()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,8 +148,9 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let selectedTask = tasks[indexPath.row]
+        var selectedTask = tasks[indexPath.row]
         let actionComplete = UIContextualAction(style: .normal, title: nil) { _, _, _ in
+            selectedTask.isCompleted.toggle()
             self.presenter?.didTapCompleted(task: selectedTask)
         }
         actionComplete.image = AppIcons.checkmark

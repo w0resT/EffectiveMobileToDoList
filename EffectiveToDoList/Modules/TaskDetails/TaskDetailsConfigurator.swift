@@ -14,7 +14,7 @@ final class TaskDetailsConfigurator {
         interactor.presenter = presenter
         router.view = view
         
-        presenter.task = task
+        interactor.presenter?.didFetchTask(task ?? Task())
         
         return view
     }

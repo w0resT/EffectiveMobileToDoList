@@ -4,9 +4,10 @@ final class TaskListConfigurator {
     static func configure() -> UIViewController {
         let networkService = NetworkService()
         let networkManager = NetworkManager(networkService: networkService)
+        let storageManager = StorageManager()
         
         let view = TaskListViewController()
-        let interactor = TaskListInteractor()
+        let interactor = TaskListInteractor(networkManager: networkManager, storageManager: storageManager)
         let presenter = TaskListPresenter()
         let router = TaskListRouter()
         
@@ -16,8 +17,6 @@ final class TaskListConfigurator {
         presenter.router = router
         interactor.presenter = presenter
         router.view = view
-        
-        interactor.networkManager = networkManager
         
         return view
     }
