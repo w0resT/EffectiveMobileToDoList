@@ -22,6 +22,21 @@ final class CoreDataManager {
     }
     
     // MARK: - Operations
+    func hasTasks(completion: @escaping (Result<Bool, Error>) -> Void) {
+        let context = backgroundContext
+        context.perform {
+            do {
+                let fetchRequest = TaskEntity.fetchRequest()
+                fetchRequest.fetchLimit = 1
+                
+                let taskCounts = try context.count(for: fetchRequest)
+                completion(.success(taskCounts > 0))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchTasks(completion: @escaping (Result<[Task], Error>) -> Void) {
         performOperationAndFetchAll(operation: nil, completion: completion)
     }
@@ -70,38 +85,44 @@ final class CoreDataManager {
         }, completion: completion)
     }
     
-    func createOrUpdateTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void) {
+    func createOrUpdateTasks(_ tasks: [Task], completion: @escaping (Result<[Task], Error>) -> Void) {
         performOperationAndFetchAll(operation: { context in
-            let fetchRequest = TaskEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %d", task.id)
-            
-            // Изменяем запись если она существует, или создаем новую
-            if let taskEntity = try context.fetch(fetchRequest).first {
-                taskEntity.title = task.title
-                taskEntity.descriptionText = task.description
-                taskEntity.dateCreated = task.dateCreated
-                taskEntity.isCompleted = task.isCompleted
-            } else {
-                // TODO: Заменить на UUID
-                let taskId: Int64
-                if task.id == 0 {
-                    fetchRequest.predicate = NSPredicate(format: "id == max(id)")
-                    
-                    // Если есть запись, то ставим "ID = ID + 1", если нет - "ID = 1"
-                    taskId = (try context.fetch(fetchRequest).first?.id ?? 0) + 1
-                } else {
-                    taskId = Int64(task.id)
-                }
+            for task in tasks {
+                let fetchRequest = TaskEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %d", task.id)
                 
-                let newTask = TaskEntity(context: context)
-                newTask.id = taskId
-                newTask.title = task.title
-                newTask.descriptionText = task.description
-                newTask.dateCreated = task.dateCreated
-                newTask.isCompleted = task.isCompleted
+                // Изменяем запись если она существует, или создаем новую
+                if let taskEntity = try context.fetch(fetchRequest).first {
+                    taskEntity.title = task.title
+                    taskEntity.descriptionText = task.description
+                    taskEntity.dateCreated = task.dateCreated
+                    taskEntity.isCompleted = task.isCompleted
+                } else {
+                    // TODO: Заменить на UUID
+                    let taskId: Int64
+                    if task.id == 0 {
+                        fetchRequest.predicate = NSPredicate(format: "id == max(id)")
+                        
+                        // Если есть запись, то ставим "ID = ID + 1", если нет - "ID = 1"
+                        taskId = (try context.fetch(fetchRequest).first?.id ?? 0) + 1
+                    } else {
+                        taskId = Int64(task.id)
+                    }
+                    
+                    let newTask = TaskEntity(context: context)
+                    newTask.id = taskId
+                    newTask.title = task.title
+                    newTask.descriptionText = task.description
+                    newTask.dateCreated = task.dateCreated
+                    newTask.isCompleted = task.isCompleted
+                }
+                try context.save()
             }
-            try context.save()
         }, completion: completion)
+    }
+    
+    func createOrUpdateTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void) {
+        self.createOrUpdateTasks([task], completion: completion)
     }
     
     func fetchFilteredTasks(_ text: String, completion: @escaping (Result<[Task], Error>) -> Void) {

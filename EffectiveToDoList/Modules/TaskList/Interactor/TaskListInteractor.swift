@@ -17,14 +17,25 @@ class TaskListInteractor: TaskListInteractorProtocol {
     }
     
     // MARK: - TaskListInteractorProtocol
+    func loadTasksOnAppLaunch() {
+        storageManager?.hasTasks(completion: { result in
+            switch result {
+            case .success(let hasTasks):
+                hasTasks ? self.fetchTasks() : self.fetchTasksNetwork()
+            case .failure(let error):
+                self.presenter?.didFailToLoadTasksOnAppLaunch(error.localizedDescription)
+            }
+        })
+    }
+    
     func fetchTasksNetwork() {
         networkManager?.fetchTasks(completion: { result in
             switch result {
             case .success(let rawTasks):
                 let tasks = rawTasks.todos.map { Task(taskDTO: $0) }
-                self.presenter?.didFetchTasks(tasks)
+                self.presenter?.didFetchTasksNetwork(tasks)
             case .failure(let error):
-                self.presenter?.didFailToFetchTasks(error.localizedDescription)
+                self.presenter?.didFailToFetchTasksNetwork(error.localizedDescription)
             }
         })
     }
@@ -83,6 +94,18 @@ class TaskListInteractor: TaskListInteractorProtocol {
             }
         })
     }
+    
+    func createOrUpdateTasks(_ tasks: [Task]) {
+        storageManager?.createOrUpdateTasks(tasks, completion: { result in
+            switch result {
+            case .success(let tasks):
+                self.presenter?.didCreateOrUpdateTasks(tasks)
+            case .failure(let error):
+                self.presenter?.didFailToCreateOrUpdateTasks(error.localizedDescription)
+            }
+        })
+    }
+    
     
     func fetchFilteredTasks(_ text: String) {
         if text.isEmpty {
