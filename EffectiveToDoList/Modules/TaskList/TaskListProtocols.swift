@@ -17,6 +17,7 @@ protocol TaskListInteractorProtocol: AnyObject {
     func deleteTask(_ task: Task)
     func updateTask(_ task: Task)
     func createOrUpdateTask(_ task: Task)
+    func fetchFilteredTasks(_ text: String)
 }
 
 protocol TaskListInteractorOutputProtocol: AnyObject {
@@ -25,11 +26,13 @@ protocol TaskListInteractorOutputProtocol: AnyObject {
     func didDeleteTask(_ tasks: [Task])
     func didUpdateTask(_ tasks: [Task])
     func didCreateOrUpdateTask(_ tasks: [Task])
+    func didFetchFilteredTasks(_ tasks: [Task])
     func didFailToFetchTasks(_ error: String)
     func didFailToCreateTask(_ error: String)
     func didFailToDeleteTask(_ error: String)
     func didFailToUpdateTask(_ error: String)
     func didFailToCreateOrUpdateTask(_ error: String)
+    func didFailToFetchFilteredTasks(_ error: String)
 }
 
 // MARK: - Presenter Protocol

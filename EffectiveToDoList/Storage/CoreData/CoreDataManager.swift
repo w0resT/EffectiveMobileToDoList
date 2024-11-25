@@ -81,9 +81,8 @@ final class CoreDataManager {
                 taskEntity.descriptionText = task.description
                 taskEntity.dateCreated = task.dateCreated
                 taskEntity.isCompleted = task.isCompleted
-                try context.save()
             } else {
-                // Заменить на UUID
+                // TODO: Заменить на UUID
                 let taskId: Int64
                 if task.id == 0 {
                     fetchRequest.predicate = NSPredicate(format: "id == max(id)")
@@ -100,9 +99,36 @@ final class CoreDataManager {
                 newTask.descriptionText = task.description
                 newTask.dateCreated = task.dateCreated
                 newTask.isCompleted = task.isCompleted
-                try context.save()
             }
+            try context.save()
         }, completion: completion)
+    }
+    
+    func fetchFilteredTasks(_ text: String, completion: @escaping (Result<[Task], Error>) -> Void) {
+        let context = backgroundContext
+        context.perform {
+            do {
+                let fetchRequest = TaskEntity.fetchRequest()
+                
+                // Фильтр не чувствителен к регистру и к диакритическим знакам
+                fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateCreated", ascending: false)]
+                
+                let taskEntities = try context.fetch(fetchRequest)
+                let tasks = taskEntities.map {
+                    Task(
+                        id: Int($0.id),
+                        title: $0.title ?? "",
+                        description: $0.descriptionText,
+                        dateCreated: $0.dateCreated ?? Date.now,
+                        isCompleted: $0.isCompleted)
+                }
+                
+                completion(.success(tasks))
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
     
     private init() { }

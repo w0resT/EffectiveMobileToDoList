@@ -83,4 +83,26 @@ class TaskListInteractor: TaskListInteractorProtocol {
             }
         })
     }
+    
+    func fetchFilteredTasks(_ text: String) {
+        if text.isEmpty {
+            storageManager?.fetchTasks(completion: { result in
+                switch result {
+                case .success(let tasks):
+                    self.presenter?.didFetchFilteredTasks(tasks)
+                case .failure(let error):
+                    self.presenter?.didFailToFetchFilteredTasks(error.localizedDescription)
+                }
+            })
+        } else {
+            storageManager?.fetchFilteredTasks(text, completion: { result in
+                switch result {
+                case .success(let tasks):
+                    self.presenter?.didFetchFilteredTasks(tasks)
+                case .failure(let error):
+                    self.presenter?.didFailToFetchFilteredTasks(error.localizedDescription)
+                }
+            })
+        }
+    }
 }

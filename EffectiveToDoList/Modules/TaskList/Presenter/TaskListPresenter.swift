@@ -42,9 +42,7 @@ class TaskListPresenter: TaskListPresenterProtocol {
     }
     
     func didUpdateSearchResults(for text: String) {
-        // TODO: interactor -> storage upd -> presenter -> ...
-//        filteredTasks = text.isEmpty ? tasks : tasks.filter { $0.title.lowercased().contains(text.lowercased()) }
-//        view?.showTasks(filteredTasks)
+        interactor?.fetchFilteredTasks(text)
     }
 }
 
@@ -76,6 +74,11 @@ extension TaskListPresenter: TaskListInteractorOutputProtocol {
         view?.showTasks(tasksViewModel)
     }
     
+    func didFetchFilteredTasks(_ tasks: [Task]) {
+        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        view?.showTasks(tasksViewModel)
+    }
+    
     func didFailToFetchTasks(_ error: String) {
         print("didFailToFetchTasks: \(error)")
         // view show alert with msg = error
@@ -99,6 +102,11 @@ extension TaskListPresenter: TaskListInteractorOutputProtocol {
     
     func didFailToCreateOrUpdateTask(_ error: String) {
         print("didFailToCreateOrUpdateTask: \(error)")
+        // view show alert with msg = error
+    }
+    
+    func didFailToFetchFilteredTasks(_ error: String) {
+        print("didFailToFetchFilteredTasks: \(error)")
         // view show alert with msg = error
     }
 }

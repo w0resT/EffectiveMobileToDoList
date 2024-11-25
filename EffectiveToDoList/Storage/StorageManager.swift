@@ -6,6 +6,7 @@ protocol StorageManagerProtocol {
     func updateTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void)
     func deleteTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void)
     func createOrUpdateTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void)
+    func fetchFilteredTasks(_ text: String, completion: @escaping (Result<[Task], Error>) -> Void)
 }
 
 class StorageManager: StorageManagerProtocol {
@@ -53,6 +54,14 @@ class StorageManager: StorageManagerProtocol {
     
     func createOrUpdateTask(_ task: Task, completion: @escaping (Result<[Task], Error>) -> Void) {
         coreDataManager.createOrUpdateTask(task) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+    }
+    
+    func fetchFilteredTasks(_ text: String, completion: @escaping (Result<[Task], Error>) -> Void) {
+        coreDataManager.fetchFilteredTasks(text) { result in
             DispatchQueue.main.async {
                 completion(result)
             }
