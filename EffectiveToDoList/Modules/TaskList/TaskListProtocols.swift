@@ -5,6 +5,7 @@ protocol TaskListViewProtocol: AnyObject {
     var presenter: TaskListPresenterProtocol? { get }
     
     func showTasks(_ tasks: [TaskViewModel])
+    func showAlert(with message: String)
     func showActivityIndicator()
     func hideActivityIndicator()
 }

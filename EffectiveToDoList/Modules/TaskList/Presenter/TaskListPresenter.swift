@@ -14,7 +14,6 @@ class TaskListPresenter: TaskListPresenterProtocol {
     
     // MARK: - TaskListPresenterProtocol
     func viewDidLoad() {
-        // TODO: Update tasks in storage after fetching
         view?.showActivityIndicator()
         interactor?.loadTasksOnAppLaunch()
     }
@@ -83,51 +82,51 @@ extension TaskListPresenter: TaskListInteractorOutputProtocol {
     
     func didFailToLoadTasksOnAppLaunch(_ error: String) {
         print("didFailToLoadTasksOnAppLaunch: \(error)")
-        // view show alert with msg = error
         view?.hideActivityIndicator()
+        view?.showAlert(with: error)
     }
     
     func didFailToFetchTasksNetwork(_ error: String) {
         print("didFailToFetchTasksNetwork: \(error)")
-        // view show alert with msg = error
         view?.hideActivityIndicator()
+        view?.showAlert(with: error)
     }
     
     func didFailToFetchTasks(_ error: String) {
         print("didFailToFetchTasks: \(error)")
-        // view show alert with msg = error
         view?.hideActivityIndicator()
+        view?.showAlert(with: error)
     }
     
     func didFailToCreateTask(_ error: String) {
         print("didFailToCreateTask: \(error)")
-        // view show alert with msg = error
+        view?.showAlert(with: error)
     }
     
     func didFailToDeleteTask(_ error: String) {
         print("didFailToDeleteTask: \(error)")
-        // view show alert with msg = error
+        view?.showAlert(with: error)
     }
     
     func didFailToUpdateTask(_ error: String) {
         print("didFailToUpdateTask: \(error)")
-        // view show alert with msg = error
+        view?.showAlert(with: error)
     }
     
     func didFailToCreateOrUpdateTask(_ error: String) {
         print("didFailToCreateOrUpdateTask: \(error)")
-        // view show alert with msg = error
+        view?.showAlert(with: error)
     }
     
     func didFailToCreateOrUpdateTasks(_ error: String) {
         print("didFailToCreateOrUpdateTasks: \(error)")
-        // view show alert with msg = error
         view?.hideActivityIndicator()
+        view?.showAlert(with: error)
     }
     
     func didFailToFetchFilteredTasks(_ error: String) {
         print("didFailToFetchFilteredTasks: \(error)")
-        // view show alert with msg = error
+        view?.showAlert(with: error)
     }
 }
 

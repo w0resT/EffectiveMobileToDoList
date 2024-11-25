@@ -76,6 +76,8 @@ class TaskListViewController: UIViewController {
     
     private lazy var alertController: UIAlertController = {
         let alertController = UIAlertController(title: "Warning", message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default)
+        alertController.addAction(action)
         return alertController
     }()
     
@@ -102,6 +104,11 @@ extension TaskListViewController: TaskListViewProtocol {
         self.countLabel.text = "\(tasks.count) задач"
         
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    func showAlert(with message: String) {
+        alertController.message = message
+        self.present(alertController, animated: true)
     }
     
     func showActivityIndicator() {
