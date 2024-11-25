@@ -74,7 +74,10 @@ class TaskListInteractor: TaskListInteractorProtocol {
     }
     
     func updateTask(_ task: Task) {
-        storageManager?.updateTask(task, completion: { result in
+        var updatedTask = task
+        updatedTask.isCompleted.toggle()
+        
+        storageManager?.updateTask(updatedTask, completion: { result in
             switch result {
             case .success(let tasks):
                 self.presenter?.didUpdateTask(tasks)
@@ -105,7 +108,6 @@ class TaskListInteractor: TaskListInteractorProtocol {
             }
         })
     }
-    
     
     func fetchFilteredTasks(_ text: String) {
         if text.isEmpty {

@@ -4,8 +4,9 @@ import Foundation
 protocol TaskListViewProtocol: AnyObject {
     var presenter: TaskListPresenterProtocol? { get }
     
-    func showTasks(_ tasks: [TaskViewModel])
-    func showAlert(with message: String)
+    func showTasks(_ tasks: [TaskListViewModel])
+    func showAlert(_ message: String)
+    func updateTaskCount(with text: String)
     func showActivityIndicator()
     func hideActivityIndicator()
 }
@@ -47,12 +48,13 @@ protocol TaskListInteractorOutputProtocol: AnyObject {
 // MARK: - Presenter Protocol
 protocol TaskListPresenterProtocol: TaskDetailsDelegate, AnyObject {
     func viewDidLoad()
-    func didSelectTask(task: TaskViewModel)
-    func didTapAddTask()
-    func didTapShare(task: TaskViewModel)
-    func didTapDelete(task: TaskViewModel)
-    func didTapCompleted(task: TaskViewModel)
-    func didUpdateSearchResults(for text: String)
+    func didCreateTask()
+    func didShareTask(_ task: TaskListViewModel)
+    func didSelectTask(_ task: TaskListViewModel)
+    func didDeleteTask(_ task: TaskListViewModel)
+    func didCompleteTask(_ task: TaskListViewModel)
+    func didUpdateSearchResults(_ text: String?)
+    func updateTaskCount(_ count: Int)
 }
 
 // MARK: - Router Protocol

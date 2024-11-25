@@ -1,6 +1,6 @@
 import Foundation
 
-struct TaskViewModel  {
+struct TaskListViewModel  {
     var id: Int
     var title: String
     var description: String?
@@ -8,12 +8,13 @@ struct TaskViewModel  {
     var isCompleted: Bool
 }
 
-extension TaskViewModel {
+extension TaskListViewModel {
     init(task: Task) {
-        id = task.id
-        title = task.title
-        description = task.description
-        formattedDate = DateFormatterHelper.string(from: task.dateCreated)
-        isCompleted = task.isCompleted
+        self.id = task.id
+        self.title = task.title
+        self.description = task.description
+        self.formattedDate = DateFormatterHelper.string(from: task.dateCreated)
+        self.isCompleted = task.isCompleted
     }
 }
+

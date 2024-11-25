@@ -9,7 +9,7 @@ protocol TaskDetailsDelegate: AnyObject {
 protocol TaskDetailsViewProtocol: AnyObject {
     var presenter: TaskDetailsPresenterProtocol? { get }
     
-    func showTaskDetails(_ task: TaskViewModel)
+    func showTaskDetails(_ task: TaskListViewModel)
     func updateTitle(with text: String)
     func updateDescription(with text: String)
 }
@@ -31,7 +31,7 @@ protocol TaskDetailsPresenterProtocol: AnyObject {
     
     func didChangeTitle(with text: String)
     func didChangeDescription(with description: String)
-    func didTapBackButton(task: TaskViewModel)
+    func didTapBackButton(task: TaskListViewModel)
 }
 
 // MARK: - Router Protocol

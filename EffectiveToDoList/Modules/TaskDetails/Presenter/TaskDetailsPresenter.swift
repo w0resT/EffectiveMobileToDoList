@@ -17,7 +17,7 @@ class TaskDetailsPresenter: TaskDetailsPresenterProtocol {
         view?.updateDescription(with: description)
     }
     
-    func didTapBackButton(task: TaskViewModel) {
+    func didTapBackButton(task: TaskListViewModel) {
         var entityTask = Task(taskViewModel: task)
         entityTask.title = entityTask.title.trimmingCharacters(in: .whitespacesAndNewlines)
         entityTask.description = entityTask.description?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -27,7 +27,7 @@ class TaskDetailsPresenter: TaskDetailsPresenterProtocol {
 
 extension TaskDetailsPresenter: TaskDetailsInteractorOutputProtocol {
     func didFetchTask(_ task: Task) {
-        let taskViewModel = TaskViewModel(task: task)
+        let taskViewModel = TaskListViewModel(task: task)
         view?.showTaskDetails(taskViewModel)
     }
     

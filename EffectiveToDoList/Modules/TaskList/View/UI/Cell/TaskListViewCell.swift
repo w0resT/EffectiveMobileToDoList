@@ -57,17 +57,13 @@ class TaskViewCell: UITableViewCell {
     }
     
     // MARK: - Public Methods
-    func configure(with task: TaskViewModel) {
-        let isCompleted = task.isCompleted
-        let iconImage = isCompleted ? AppIcons.selected : AppIcons.unselected
-        let textColor = isCompleted ? AppColors.whiteOpacity : AppColors.pureWhite
-        
-        iconImageView.image = iconImage
-        titleLabel.attributedText = task.title.strikeThrough(isCompleted)
-        titleLabel.textColor = textColor
+    func configure(with task: TaskListCellViewModel) {
+        iconImageView.image = task.icon
+        titleLabel.attributedText = task.title
+        titleLabel.textColor = task.textColor
         descriptionLabel.text = task.description
-        descriptionLabel.textColor = textColor
-        dateLabel.text = task.formattedDate
+        descriptionLabel.textColor = task.textColor
+        dateLabel.text = task.date
     }
 }
 

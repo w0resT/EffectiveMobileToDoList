@@ -6,7 +6,7 @@ class TaskDetailsViewController: UIViewController {
     var presenter: TaskDetailsPresenterProtocol?
     
     // MARK: - Private Properties
-    private var task: TaskViewModel!
+    private var task: TaskListViewModel!
     
     // MARK: - UI Elements
     private lazy var headerStackView: UIStackView = {
@@ -102,7 +102,7 @@ private extension TaskDetailsViewController {
 
 // MARK: - TaskDetailsViewProtocol
 extension TaskDetailsViewController: TaskDetailsViewProtocol {
-    func showTaskDetails(_ task: TaskViewModel) {
+    func showTaskDetails(_ task: TaskListViewModel) {
         self.task = task
         setTaskDetails(task: task)
     }
@@ -149,7 +149,7 @@ extension TaskDetailsViewController: UITextViewDelegate {
 
 // MARK: - Helpers
 private extension TaskDetailsViewController {
-    func setTaskDetails(task: TaskViewModel) {
+    func setTaskDetails(task: TaskListViewModel) {
         // Не меняем текст и цвет заголовка тем самым оставляя Placeholder 
         if !task.title.isEmpty {
             titleTextView.textColor = AppColors.pureWhite

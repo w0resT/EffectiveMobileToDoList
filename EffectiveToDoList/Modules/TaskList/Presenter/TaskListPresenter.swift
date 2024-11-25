@@ -18,28 +18,33 @@ class TaskListPresenter: TaskListPresenterProtocol {
         interactor?.loadTasksOnAppLaunch()
     }
     
-    func didSelectTask(task: TaskViewModel) {
+    func updateTaskCount(_ count: Int) {
+        view?.updateTaskCount(with: "\(count) задач")
+    }
+    
+    func didSelectTask(_ task: TaskListViewModel) {
         let taskEntity = Task(taskViewModel: task)
         router?.navigateToTaskDetails(with: taskEntity)
     }
     
-    func didTapAddTask() {
+    func didCreateTask() {
         router?.navigateToAddTask()
     }
     
-    func didTapShare(task: TaskViewModel) {}
+    func didShareTask(_ task: TaskListViewModel) {}
     
-    func didTapDelete(task: TaskViewModel) {
+    func didDeleteTask(_ task: TaskListViewModel) {
         let taskEntity = Task(taskViewModel: task)
         interactor?.deleteTask(taskEntity)
     }
     
-    func didTapCompleted(task: TaskViewModel) {
+    func didCompleteTask(_ task: TaskListViewModel) {
         let taskEntity = Task(taskViewModel: task)
         interactor?.updateTask(taskEntity)
     }
     
-    func didUpdateSearchResults(for text: String) {
+    func didUpdateSearchResults(_ text: String?) {
+        guard let text = text else { return }
         interactor?.fetchFilteredTasks(text)
     }
 }
@@ -81,58 +86,49 @@ extension TaskListPresenter: TaskListInteractorOutputProtocol {
     }
     
     func didFailToLoadTasksOnAppLaunch(_ error: String) {
-        print("didFailToLoadTasksOnAppLaunch: \(error)")
         view?.hideActivityIndicator()
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToFetchTasksNetwork(_ error: String) {
-        print("didFailToFetchTasksNetwork: \(error)")
         view?.hideActivityIndicator()
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToFetchTasks(_ error: String) {
-        print("didFailToFetchTasks: \(error)")
         view?.hideActivityIndicator()
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToCreateTask(_ error: String) {
-        print("didFailToCreateTask: \(error)")
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToDeleteTask(_ error: String) {
-        print("didFailToDeleteTask: \(error)")
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToUpdateTask(_ error: String) {
-        print("didFailToUpdateTask: \(error)")
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToCreateOrUpdateTask(_ error: String) {
-        print("didFailToCreateOrUpdateTask: \(error)")
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToCreateOrUpdateTasks(_ error: String) {
-        print("didFailToCreateOrUpdateTasks: \(error)")
         view?.hideActivityIndicator()
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
     
     func didFailToFetchFilteredTasks(_ error: String) {
-        print("didFailToFetchFilteredTasks: \(error)")
-        view?.showAlert(with: error)
+        view?.showAlert(error)
     }
 }
 
 private extension TaskListPresenter {
     func transformAndShowTasks(_ tasks: [Task]) {
-        let tasksViewModel = tasks.map{ TaskViewModel(task: $0)}
+        let tasksViewModel = tasks.map{ TaskListViewModel(task: $0)}
         view?.showTasks(tasksViewModel)
     }
 }
