@@ -1,35 +1,52 @@
-//
-//  TaskDetailsInteractorTests.swift
-//  EffectiveToDoListTests
-//
-//  Created by Mikhail on 26.11.2024.
-//
-
 import XCTest
+@testable import EffectiveToDoList
 
 final class TaskDetailsInteractorTests: XCTestCase {
+    
+    // MARK: - Properties
+    var interactor: TaskDetailsInteractorProtocol!
+    var mockPresenter: MockTaskDetailsInteractorOutput!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    // MARK: - Setup
+    override func setUp() {
+        super.setUp()
+        
+        mockPresenter = MockTaskDetailsInteractorOutput()
+        interactor = TaskDetailsInteractor(presenter: mockPresenter)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    override func tearDown() {
+        interactor = nil
+        mockPresenter = nil
+ 
+        super.tearDown()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    // MARK: - Tests
+    func testSaveAndNavigationBack_EmptyTask() {
+        let task = Task(id: 1, title: "", description: nil, dateCreated: Date.now, isCompleted: true)
+        interactor.saveAndNavigationBack(task)
+        XCTAssertTrue(mockPresenter.didNavigateBackCalled)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testSaveAndNavigationBack_Delegate() {
+        let task = Task(id: 1, title: "test", description: "description", dateCreated: Date.now, isCompleted: true)
+        interactor.saveAndNavigationBack(task)
+        XCTAssertTrue(mockPresenter.didDelegateAndNavigateBack)
     }
+}
 
+class MockTaskDetailsInteractorOutput: TaskDetailsInteractorOutputProtocol {
+    var didNavigateBackCalled = false
+    var didDelegateAndNavigateBack = false
+
+    func didFetchTask(_ task: Task) {}
+    
+    func navigateBack() {
+        didNavigateBackCalled = true
+    }
+    
+    func delegateAndNavigateBack(_ task: Task) {
+        didDelegateAndNavigateBack = true
+    }
 }

@@ -31,7 +31,7 @@ final class TaskListPresenterTest: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: - TaskListPresenterProtocol
+    // MARK: - Tests TaskListPresenterProtocol
     func testViewDidLoad() {
         presenter.viewDidLoad()
         XCTAssertTrue(mockView.didShowActivityIndicatorCalled)
@@ -96,7 +96,7 @@ final class TaskListPresenterTest: XCTestCase {
         XCTAssertTrue(true)
     }
     
-    // MARK: - TaskListInteractorOutputProtocol
+    // MARK: - Tests TaskListInteractorOutputProtocol
     func testDidFetchTasksNetworkOutput() {
         let tasks = [Task(id: 1, title: "test", description: "description", dateCreated: Date.now, isCompleted: true)]
         presenter.didFetchTasksNetwork(tasks)
