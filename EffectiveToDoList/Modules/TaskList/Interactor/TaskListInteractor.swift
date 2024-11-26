@@ -10,7 +10,9 @@ class TaskListInteractor: TaskListInteractorProtocol {
     private var storageManager: StorageManagerProtocol?
     
     // MARK: - Initializers
-    init(presenter: TaskListInteractorOutputProtocol? = nil, networkManager: NetworkManagerProtocol? = nil, storageManager: StorageManagerProtocol? = nil) {
+    init(presenter: TaskListInteractorOutputProtocol? = nil, 
+         networkManager: NetworkManagerProtocol? = nil,
+         storageManager: StorageManagerProtocol? = nil) {
         self.presenter = presenter
         self.networkManager = networkManager
         self.storageManager = storageManager
@@ -34,7 +36,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
             switch result {
             case .success(let rawTasks):
                 let tasks = rawTasks.todos.map { Task(taskDTO: $0) }
-                self.presenter?.didFetchTasksNetwork(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didFetchTasksNetwork(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToFetchTasksNetwork(error.localizedDescription)
             }
@@ -45,7 +48,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.fetchTasks(completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didFetchTasks(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didFetchTasks(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToFetchTasks(error.localizedDescription)
             }
@@ -56,7 +60,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.createTask(task, completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didCreateTask(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didCreateTask(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToCreateTask(error.localizedDescription)
             }
@@ -67,7 +72,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.deleteTask(task, completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didDeleteTask(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didDeleteTask(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToDeleteTask(error.localizedDescription)
             }
@@ -81,7 +87,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.updateTask(updatedTask, completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didUpdateTask(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didUpdateTask(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToUpdateTask(error.localizedDescription)
             }
@@ -92,7 +99,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.createOrUpdateTask(task, completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didCreateOrUpdateTask(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didCreateOrUpdateTask(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToCreateOrUpdateTask(error.localizedDescription)
             }
@@ -103,7 +111,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
         storageManager?.createOrUpdateTasks(tasks, completion: { result in
             switch result {
             case .success(let tasks):
-                self.presenter?.didCreateOrUpdateTasks(tasks)
+                let sortedTasks = self.getSortedTasks(tasks)
+                self.presenter?.didCreateOrUpdateTasks(sortedTasks)
             case .failure(let error):
                 self.presenter?.didFailToCreateOrUpdateTasks(error.localizedDescription)
             }
@@ -115,7 +124,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
             storageManager?.fetchTasks(completion: { result in
                 switch result {
                 case .success(let tasks):
-                    self.presenter?.didFetchFilteredTasks(tasks)
+                    let sortedTasks = self.getSortedTasks(tasks)
+                    self.presenter?.didFetchFilteredTasks(sortedTasks)
                 case .failure(let error):
                     self.presenter?.didFailToFetchFilteredTasks(error.localizedDescription)
                 }
@@ -124,7 +134,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
             storageManager?.fetchFilteredTasks(text, completion: { result in
                 switch result {
                 case .success(let tasks):
-                    self.presenter?.didFetchFilteredTasks(tasks)
+                    let sortedTasks = self.getSortedTasks(tasks)
+                    self.presenter?.didFetchFilteredTasks(sortedTasks)
                 case .failure(let error):
                     self.presenter?.didFailToFetchFilteredTasks(error.localizedDescription)
                 }
@@ -136,5 +147,9 @@ class TaskListInteractor: TaskListInteractorProtocol {
 private extension TaskListInteractor {
     func getTodosUrl() -> String {
         return APIConstants.baseUrl + APIConstants.todosEndpoint
+    }
+    
+    func getSortedTasks(_ tasks: [Task]) -> [Task] {
+        return tasks.sorted { $0.id > $1.id }
     }
 }

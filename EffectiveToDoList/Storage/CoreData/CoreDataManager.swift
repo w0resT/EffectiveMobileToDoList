@@ -144,7 +144,6 @@ final class CoreDataManager: CoreDataManagerProtocol {
                 
                 // Фильтр не чувствителен к регистру и к диакритическим знакам
                 fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
-                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateCreated", ascending: false)]
                 
                 let taskEntities = try context.fetch(fetchRequest)
                 let tasks = taskEntities.map {

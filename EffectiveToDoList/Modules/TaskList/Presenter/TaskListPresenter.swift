@@ -8,7 +8,9 @@ class TaskListPresenter: TaskListPresenterProtocol {
     weak var view: TaskListViewProtocol?
     
     // MARK: - Initializers
-    init(interactor: TaskListInteractorProtocol? = nil, router: TaskListRouterProtocol? = nil, view: TaskListViewProtocol? = nil) {
+    init(interactor: TaskListInteractorProtocol? = nil, 
+         router: TaskListRouterProtocol? = nil,
+         view: TaskListViewProtocol? = nil) {
         self.interactor = interactor
         self.router = router
         self.view = view
