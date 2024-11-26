@@ -29,7 +29,8 @@ class TaskListInteractor: TaskListInteractorProtocol {
     }
     
     func fetchTasksNetwork() {
-        networkManager?.fetchTasks(completion: { result in
+        let urlString = getTodosUrl()
+        networkManager?.fetchTasks(urlString: urlString, completion: { result in
             switch result {
             case .success(let rawTasks):
                 let tasks = rawTasks.todos.map { Task(taskDTO: $0) }
@@ -129,5 +130,11 @@ class TaskListInteractor: TaskListInteractorProtocol {
                 }
             })
         }
+    }
+}
+
+private extension TaskListInteractor {
+    func getTodosUrl() -> String {
+        return APIConstants.baseUrl + APIConstants.todosEndpoint
     }
 }

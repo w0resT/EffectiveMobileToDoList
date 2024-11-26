@@ -14,10 +14,10 @@ protocol StorageManagerProtocol {
 class StorageManager: StorageManagerProtocol {
 
     // MARK: - Properties
-    private var coreDataManager: CoreDataManager
+    private var coreDataManager: CoreDataManagerProtocol
     
     // MARK: - Initializers
-    init(coreDataManager: CoreDataManager = CoreDataManager.shared) {
+    init(coreDataManager: CoreDataManagerProtocol = CoreDataManager.shared) {
         self.coreDataManager = coreDataManager
     }
     

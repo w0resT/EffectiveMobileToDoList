@@ -8,6 +8,17 @@ class TaskDetailsPresenter: TaskDetailsPresenterProtocol {
     var router: TaskDetailsRouterProtocol?
     var interactor: TaskDetailsInteractorProtocol?
     
+    // MARK: - Initializers
+    init(interactor: TaskDetailsInteractorProtocol? = nil,
+         router: TaskDetailsRouterProtocol? = nil,
+         view: TaskDetailsViewProtocol? = nil,
+         delegate: TaskDetailsDelegate? = nil) {
+        self.view = view
+        self.delegate = delegate
+        self.router = router
+        self.interactor = interactor
+    }
+    
     // MARK: - TaskDetailsPresenterProtocol
     func didChangeTitle(with text: String) {
         view?.updateTitle(with: text)
@@ -21,7 +32,7 @@ class TaskDetailsPresenter: TaskDetailsPresenterProtocol {
         var entityTask = Task(taskViewModel: task)
         entityTask.title = entityTask.title.trimmingCharacters(in: .whitespacesAndNewlines)
         entityTask.description = entityTask.description?.trimmingCharacters(in: .whitespacesAndNewlines)
-        interactor?.createOrUpdateTask(entityTask)
+        interactor?.saveAndNavigationBack(entityTask)
     }
 }
 

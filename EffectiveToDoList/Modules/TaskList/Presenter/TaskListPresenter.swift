@@ -7,6 +7,13 @@ class TaskListPresenter: TaskListPresenterProtocol {
     var router: TaskListRouterProtocol?
     weak var view: TaskListViewProtocol?
     
+    // MARK: - Initializers
+    init(interactor: TaskListInteractorProtocol? = nil, router: TaskListRouterProtocol? = nil, view: TaskListViewProtocol? = nil) {
+        self.interactor = interactor
+        self.router = router
+        self.view = view
+    }
+    
     // MARK: - TaskDetailsDelegate
     func didUpdateTask(_ task: Task) {
         interactor?.createOrUpdateTask(task)

@@ -1,13 +1,13 @@
 import Foundation
 
-struct TaskDTO: Decodable {
+struct TaskDTO: Codable {
     var id: Int
     var todo: String
     var completed: Bool
     var userId: Int
 }
 
-struct TaskListDTO: Decodable {
+struct TaskListDTO: Codable {
     var todos: [TaskDTO]
 }
 

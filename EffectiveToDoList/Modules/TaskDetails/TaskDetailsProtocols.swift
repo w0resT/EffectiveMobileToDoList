@@ -16,7 +16,7 @@ protocol TaskDetailsViewProtocol: AnyObject {
 
 // MARK: - Interactor Protocols
 protocol TaskDetailsInteractorProtocol: AnyObject {
-    func createOrUpdateTask(_ task: Task)
+    func saveAndNavigationBack(_ task: Task)
 }
 
 protocol TaskDetailsInteractorOutputProtocol: AnyObject {
