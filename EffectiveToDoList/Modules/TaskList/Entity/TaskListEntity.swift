@@ -1,6 +1,5 @@
 import Foundation
 
-// TODO: conform to the Equatable
 struct Task {
     var id: Int
     var title: String
@@ -18,3 +17,5 @@ extension Task {
         self.isCompleted = false
     }
 }
+
+extension Task: Equatable {}

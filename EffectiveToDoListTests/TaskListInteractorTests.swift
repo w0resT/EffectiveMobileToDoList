@@ -76,10 +76,7 @@ final class TaskListInteractorTests: XCTestCase {
         
         XCTAssertTrue(mockPresenter.didFetchTasksCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, tasks.count)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, tasks.first!.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, tasks.first!.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, tasks.first!.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, tasks.first!.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, tasks.first)
     }
     
     func testFetchTasks_StorageFetch_Failure() {
@@ -97,11 +94,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertTrue(mockStorageManager.didCreateTaskCalled)
         XCTAssertTrue(mockPresenter.didCreateTaskCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testCreateTask_Failure() {
@@ -120,11 +113,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertTrue(mockStorageManager.didDeleteTaskCalled)
         XCTAssertTrue(mockPresenter.didDeleteTaskCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testDeleteTask_Failure() {
@@ -143,11 +132,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertTrue(mockStorageManager.didUpdateTaskCalled)
         XCTAssertTrue(mockPresenter.didUpdateTaskCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testUpdateTask_Failure() {
@@ -166,11 +151,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertTrue(mockStorageManager.didCreateOrUpdateTaskCalled)
         XCTAssertTrue(mockPresenter.didCreateOrUpdateTaskCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testCreateOrUpdateTask_Failure() {
@@ -189,11 +170,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertTrue(mockStorageManager.didCreateOrUpdateTasksCalled)
         XCTAssertTrue(mockPresenter.didCreateOrUpdateTasksCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testCreateOrUpdateTasks_Failure() {
@@ -212,7 +189,8 @@ final class TaskListInteractorTests: XCTestCase {
         
         XCTAssertTrue(mockStorageManager.didFetchFilteredTasksCalled)
         XCTAssertTrue(mockPresenter.didFetchFilteredTasksCalled)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
+        XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testFetchFilteredTasks_Failure() {
@@ -232,11 +210,7 @@ final class TaskListInteractorTests: XCTestCase {
         XCTAssertFalse(mockStorageManager.didFetchFilteredTasksCalled)
         XCTAssertTrue(mockPresenter.didFetchFilteredTasksCalled)
         XCTAssertEqual(mockPresenter.didFetchResult.count, 1)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.id, task.id)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.title, task.title)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.description, task.description)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.dateCreated, task.dateCreated)
-        XCTAssertEqual(mockPresenter.didFetchResult.first?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockPresenter.didFetchResult.first, task)
     }
     
     func testFetchFilteredTasks_EmptyFilter_Failure() {

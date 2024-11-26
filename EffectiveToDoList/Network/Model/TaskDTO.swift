@@ -11,3 +11,5 @@ struct TaskListDTO: Codable {
     var todos: [TaskDTO]
 }
 
+extension TaskDTO: Equatable {}
+extension TaskListDTO: Equatable {}

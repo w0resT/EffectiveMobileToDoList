@@ -34,9 +34,7 @@ final class NetworkManagerTests: XCTestCase {
         networkManager.fetchTasks(urlString: urlString) { result in
             switch result {
             case .success(let taskList):
-                XCTAssertEqual(taskList.todos.count, expectedTaskList.todos.count)
-                XCTAssertEqual(taskList.todos.first?.id, expectedTaskList.todos.first?.id)
-                XCTAssertEqual(taskList.todos.first?.todo, expectedTaskList.todos.first?.todo)
+                XCTAssertEqual(taskList, expectedTaskList)
                 expectation.fulfill()
             case .failure:
                 XCTFail("Expected success but received failure")

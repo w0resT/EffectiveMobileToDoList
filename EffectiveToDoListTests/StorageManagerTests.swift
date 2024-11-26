@@ -48,10 +48,7 @@ final class StorageManagerTests: XCTestCase {
             switch result {
             case .success(let tasks):
                 XCTAssertEqual(tasks.count, expectedTasks.count)
-                XCTAssertEqual(tasks.first?.id, expectedTasks.first!.id)
-                XCTAssertEqual(tasks.first?.title, expectedTasks.first!.title)
-                XCTAssertEqual(tasks.first?.dateCreated, expectedTasks.first!.dateCreated)
-                XCTAssertEqual(tasks.first?.isCompleted, expectedTasks.first!.isCompleted)
+                XCTAssertEqual(tasks.first, expectedTasks.first)
             case .failure:
                 XCTFail("Expected success but got failure")
             }
@@ -89,10 +86,7 @@ final class StorageManagerTests: XCTestCase {
             switch result {
             case .success(let tasks):
                 XCTAssertEqual(tasks.count, expectedTasks.count)
-                XCTAssertEqual(tasks.first?.id, expectedTasks.first!.id)
-                XCTAssertEqual(tasks.first?.title, expectedTasks.first!.title)
-                XCTAssertEqual(tasks.first?.dateCreated, expectedTasks.first!.dateCreated)
-                XCTAssertEqual(tasks.first?.isCompleted, expectedTasks.first!.isCompleted)
+                XCTAssertEqual(tasks.first, expectedTasks.first)
             case .failure:
                 XCTFail("Expected success but got failure")
             }
@@ -112,10 +106,7 @@ final class StorageManagerTests: XCTestCase {
             switch result {
             case .success(let tasks):
                 XCTAssertEqual(tasks.count, expectedTasks.count)
-                XCTAssertEqual(tasks.first?.id, expectedTasks.first!.id)
-                XCTAssertEqual(tasks.first?.title, expectedTasks.first!.title)
-                XCTAssertEqual(tasks.first?.dateCreated, expectedTasks.first!.dateCreated)
-                XCTAssertEqual(tasks.first?.isCompleted, expectedTasks.first!.isCompleted)
+                XCTAssertEqual(tasks.first, expectedTasks.first)
             case .failure:
                 XCTFail("Expected success but got failure")
             }
@@ -153,10 +144,7 @@ final class StorageManagerTests: XCTestCase {
             switch result {
             case .success(let tasks):
                 XCTAssertEqual(tasks.count, expectedTasks.count)
-                XCTAssertEqual(tasks.first?.id, expectedTasks.first!.id)
-                XCTAssertEqual(tasks.first?.title, expectedTasks.first!.title)
-                XCTAssertEqual(tasks.first?.dateCreated, expectedTasks.first!.dateCreated)
-                XCTAssertEqual(tasks.first?.isCompleted, expectedTasks.first!.isCompleted)
+                XCTAssertEqual(tasks.first, expectedTasks.first)
             case .failure:
                 XCTFail("Expected success but got failure")
             }

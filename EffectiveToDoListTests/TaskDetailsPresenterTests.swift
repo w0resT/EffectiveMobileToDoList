@@ -70,15 +70,6 @@ final class TaskDetailsPresenterTests: XCTestCase {
     }
     
     // MARK: - Tests TaskDetailsInteractorOutputProtocol
-    /*
-     
-     func delegateAndNavigateBack(_ task: Task) {
-         delegate?.didUpdateTask(task)
-         router?.navigateBack()
-     }
-     
-     */
-    
     func testDidFetchTask() {
         let task = Task(id: 1, title: "test", dateCreated: Date.now, isCompleted: true)
         presenter.didFetchTask(task)
@@ -98,9 +89,7 @@ final class TaskDetailsPresenterTests: XCTestCase {
         presenter.delegateAndNavigateBack(task)
         XCTAssertTrue(mockRouter.didNavigateBackCalled)
         XCTAssertTrue(mockDelegate.didUpdateTaskCalled)
-        XCTAssertEqual(mockDelegate.fetchedTask?.id, task.id)
-        XCTAssertEqual(mockDelegate.fetchedTask?.title, task.title)
-        XCTAssertEqual(mockDelegate.fetchedTask?.isCompleted, task.isCompleted)
+        XCTAssertEqual(mockDelegate.fetchedTask, task)
     }
 }
 

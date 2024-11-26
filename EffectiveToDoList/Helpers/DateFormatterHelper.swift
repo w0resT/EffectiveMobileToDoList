@@ -3,8 +3,8 @@ import Foundation
 final class DateFormatterHelper {
     static let shared: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
+        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.timeZone = TimeZone.current
         return formatter
     }()
     
